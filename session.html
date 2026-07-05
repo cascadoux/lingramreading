@@ -1,0 +1,530 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Schedule a Story Session — Lingram Reading Room</title>
+<style>
+:root{--dark:#0D0A05;--gold:#C8962A;--cream:#FFFDF5;--text:#1A1208;--muted:#6B5C3E;--white:#fff;--border:#E8E0D0;--saffron:#FF6B00;--green:#1A3A1A;--purple:#2d1b4e;--success:#2d6a2d;--light-gold:#FFF3DC}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--cream);color:var(--text)}
+
+nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:2px solid var(--gold)}
+.nav-logo{color:var(--white);font-size:1rem;font-weight:800;text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.nav-logo span{color:var(--gold);font-size:1.4rem}
+.back-btn{color:rgba(255,255,255,.7);font-size:.85rem;text-decoration:none;display:flex;align-items:center;gap:.4rem}
+.back-btn:hover{color:var(--gold)}
+
+.hero{background:linear-gradient(135deg,var(--dark) 0%,#1A0A2E 100%);color:var(--white);padding:3.5rem 2rem;text-align:center}
+.hero-symbols{font-size:1.8rem;letter-spacing:.4rem;margin-bottom:1rem;opacity:.6}
+.hero h1{font-size:clamp(1.6rem,4vw,2.8rem);font-weight:900;line-height:1.15;margin-bottom:.75rem}
+.hero h1 span{color:var(--gold)}
+.hero-sub{color:rgba(255,255,255,.65);font-size:1rem;max-width:600px;margin:0 auto;line-height:1.7}
+
+.platforms-strip{background:var(--dark);border-top:1px solid rgba(255,255,255,.08);padding:1rem 2rem;display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
+.platform-chip{display:flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.6);font-size:.82rem}
+.platform-chip strong{color:var(--gold)}
+
+.wizard{max-width:760px;margin:3rem auto;padding:0 1.5rem 3rem}
+.step-indicators{display:flex;gap:0;margin-bottom:2.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.step-ind{flex:1;padding:.75rem .5rem;text-align:center;font-size:.78rem;font-weight:600;background:var(--white);color:var(--muted);border-right:1px solid var(--border);transition:all .3s;cursor:pointer}
+.step-ind:last-child{border-right:none}
+.step-ind.active{background:var(--dark);color:var(--gold)}
+.step-ind.done{background:var(--green);color:var(--white)}
+.step-ind .step-num{display:block;font-size:1rem;font-weight:900;margin-bottom:.1rem}
+
+.step-panel{display:none;background:var(--white);border-radius:16px;padding:2.5rem;border:1px solid var(--border)}
+.step-panel.active{display:block}
+.step-title{font-size:1.3rem;font-weight:800;color:var(--dark);margin-bottom:.4rem}
+.step-sub{color:var(--muted);font-size:.9rem;line-height:1.6;margin-bottom:2rem}
+
+.form-group{margin-bottom:1.25rem}
+.form-group label{display:block;font-weight:600;font-size:.85rem;color:var(--text);margin-bottom:.4rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:.8rem 1rem;border:2px solid var(--border);border-radius:8px;font-size:.92rem;font-family:inherit;color:var(--text);background:var(--cream);transition:border .2s;outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--dark);background:var(--white)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:540px){.form-row{grid-template-columns:1fr}}
+
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.platform-btn{border:2px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center;cursor:pointer;background:var(--cream);transition:all .2s}
+.platform-btn:hover{border-color:var(--gold);background:var(--light-gold)}
+.platform-btn.selected{border-color:var(--gold);background:var(--light-gold)}
+.platform-btn .p-icon{font-size:2rem;margin-bottom:.4rem;display:block}
+.platform-btn .p-name{font-weight:700;font-size:.85rem;color:var(--dark)}
+.platform-btn .p-desc{font-size:.72rem;color:var(--muted);margin-top:.15rem}
+
+.story-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.story-btn{border:2px solid var(--border);border-radius:10px;padding:1rem;cursor:pointer;background:var(--cream);transition:all .2s;text-align:left}
+.story-btn:hover,.story-btn.selected{border-color:var(--gold);background:var(--light-gold)}
+.story-btn .s-faith{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:.3rem}
+.story-btn .s-title{font-weight:700;font-size:.82rem;color:var(--dark);line-height:1.3}
+.story-btn .s-age{font-size:.72rem;color:var(--muted);margin-top:.2rem}
+
+.voice-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.voice-btn{border:2px solid var(--border);border-radius:10px;padding:1rem;cursor:pointer;background:var(--cream);transition:all .2s;text-align:center}
+.voice-btn:hover,.voice-btn.selected{border-color:var(--purple);background:#f0ebf8}
+.voice-btn .v-icon{font-size:2rem;margin-bottom:.3rem}
+.voice-btn .v-name{font-weight:700;font-size:.8rem;color:var(--dark)}
+.voice-btn .v-type{font-size:.7rem;color:var(--muted);margin-top:.1rem}
+
+.note-box{background:var(--light-gold);border:1px solid rgba(200,150,42,.3);border-radius:10px;padding:1rem 1.25rem;font-size:.82rem;color:var(--text);line-height:1.6;margin-bottom:1.5rem;display:flex;gap:.75rem}
+.note-box svg{flex-shrink:0;color:var(--gold);margin-top:.1rem}
+
+.btn{padding:.85rem 1.75rem;border-radius:8px;font-weight:700;font-size:.95rem;border:none;cursor:pointer;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-primary{background:var(--dark);color:var(--white)}
+.btn-primary:hover{background:#1a3060;transform:translateY(-1px)}
+.btn-gold{background:var(--gold);color:var(--dark)}
+.btn-gold:hover{background:#b8841a}
+.btn-outline{background:transparent;color:var(--dark);border:2px solid var(--border)}
+.btn-outline:hover{border-color:var(--dark)}
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:2rem}
+
+/* CONFIRMATION SCREEN */
+.confirm-screen{display:none;background:var(--white);border-radius:16px;padding:2.5rem;border:1px solid var(--border);text-align:center}
+.confirm-icon{font-size:4rem;margin-bottom:1rem}
+.confirm-title{font-size:1.4rem;font-weight:800;color:var(--dark);margin-bottom:.5rem}
+.confirm-sub{color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:2rem}
+.confirm-details{background:var(--cream);border-radius:12px;padding:1.5rem;text-align:left;margin-bottom:2rem}
+.detail-row{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.detail-row:last-child{border-bottom:none}
+.detail-label{color:var(--muted)}
+.detail-val{font-weight:600;color:var(--dark);text-align:right;max-width:60%}
+.next-steps{background:linear-gradient(135deg,var(--dark),var(--purple));border-radius:12px;padding:1.5rem;color:var(--white);text-align:left;margin-bottom:1.5rem}
+.next-steps h3{color:var(--gold);font-size:.95rem;font-weight:700;margin-bottom:.75rem}
+.next-step{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.6rem;font-size:.85rem;color:rgba(255,255,255,.8)}
+.step-dot{background:var(--gold);color:var(--dark);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;margin-top:.05rem}
+
+/* ADMIN SECTION */
+.admin-strip{background:var(--green);color:var(--white);padding:2rem;text-align:center;border-radius:16px;margin-top:2rem}
+.admin-strip h3{color:var(--gold);margin-bottom:.5rem}
+.admin-strip p{font-size:.85rem;color:rgba(255,255,255,.7);margin-bottom:1rem}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo"><span>📖</span>Lingram Reading Room</a>
+  <a href="/" class="back-btn">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 5-7 7 7 7"/></svg>
+    Back to Library
+  </a>
+</nav>
+
+<div class="hero">
+  <div class="hero-symbols">📖 ✨ 🎙️</div>
+  <h1>Schedule a <span>Sacred Story Session</span></h1>
+  <p class="hero-sub">Book a live reading session. The narrator joins via video or phone. The session is recorded and saved to your child's library forever.</p>
+</div>
+
+<div class="platforms-strip">
+  <div class="platform-chip"><span>🟦</span><strong>Microsoft Teams</strong></div>
+  <div class="platform-chip"><span>🔵</span><strong>Zoom</strong></div>
+  <div class="platform-chip"><span>🟢</span><strong>Google Meet</strong></div>
+  <div class="platform-chip"><span>📞</span><strong>Phone Call</strong></div>
+  <div class="platform-chip"><span>🌐</span><strong>Browser Recorder</strong></div>
+</div>
+
+<div class="wizard">
+
+  <!-- STEP INDICATORS -->
+  <div class="step-indicators">
+    <div class="step-ind active" id="ind-1" onclick="goStep(1)">
+      <span class="step-num">1</span>Child & Story
+    </div>
+    <div class="step-ind" id="ind-2" onclick="goStep(2)">
+      <span class="step-num">2</span>Narrator & Voice
+    </div>
+    <div class="step-ind" id="ind-3" onclick="goStep(3)">
+      <span class="step-num">3</span>Platform & Time
+    </div>
+    <div class="step-ind" id="ind-4" onclick="goStep(4)">
+      <span class="step-num">4</span>Confirm
+    </div>
+  </div>
+
+  <!-- STEP 1 — Child & Story -->
+  <div class="step-panel active" id="step-1">
+    <div class="step-title">Who is this story for?</div>
+    <div class="step-sub">Tell us about the child and choose the sacred story they'll hear.</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Child's First Name *</label>
+        <input type="text" id="childName" placeholder="e.g. Priya"/>
+      </div>
+      <div class="form-group">
+        <label>Child's Age *</label>
+        <select id="childAge">
+          <option value="">Select age</option>
+          <option value="0-3">0–3 (Seedling)</option>
+          <option value="4-6">4–6 (Sprout)</option>
+          <option value="7-10">7–10 (Sapling)</option>
+          <option value="11-13">11–13 (Growing)</option>
+          <option value="14-17">14–17 (Seeker)</option>
+          <option value="18+">18+ (Scholar)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Faith Tradition</label>
+      <select id="faithTrad">
+        <option value="">Select tradition (optional)</option>
+        <option>🕉️ Hinduism</option>
+        <option>✝️ Christianity</option>
+        <option>☪️ Islam</option>
+        <option>☸️ Buddhism</option>
+        <option>✡️ Judaism</option>
+        <option>🙏 Sikhism</option>
+        <option>🕊️ Jainism</option>
+        <option>☯️ Taoism</option>
+        <option>🌿 Indigenous Tradition</option>
+        <option>🏛️ World Mythology</option>
+        <option>No preference — any tradition</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Choose a Story *</label>
+    </div>
+    <div class="story-grid">
+      <div class="story-btn selected" onclick="selectStory(this,'Bhagavad Gita — Chapter 2')">
+        <div class="s-faith">🕉️ Hindu</div>
+        <div class="s-title">Bhagavad Gita — Ch. 2</div>
+        <div class="s-age">All ages · 8 min</div>
+      </div>
+      <div class="story-btn" onclick="selectStory(this,'The Sermon on the Mount')">
+        <div class="s-faith">✝️ Christian</div>
+        <div class="s-title">Sermon on the Mount</div>
+        <div class="s-age">Ages 7+ · 12 min</div>
+      </div>
+      <div class="story-btn" onclick="selectStory(this,'Surah Al-Fatiha')">
+        <div class="s-faith">☪️ Islam</div>
+        <div class="s-title">Surah Al-Fatiha</div>
+        <div class="s-age">All ages · 5 min</div>
+      </div>
+      <div class="story-btn" onclick="selectStory(this,'The Birth of the Buddha')">
+        <div class="s-faith">☸️ Buddhist</div>
+        <div class="s-title">Birth of the Buddha</div>
+        <div class="s-age">Ages 4+ · 10 min</div>
+      </div>
+      <div class="story-btn" onclick="selectStory(this,'Psalm 23 — The Lord Is My Shepherd')">
+        <div class="s-faith">✡️ Jewish</div>
+        <div class="s-title">Psalm 23</div>
+        <div class="s-age">All ages · 4 min</div>
+      </div>
+      <div class="story-btn" onclick="selectStory(this,'The Story of Hanuman')">
+        <div class="s-faith">🕉️ Hindu</div>
+        <div class="s-title">The Story of Hanuman</div>
+        <div class="s-age">Ages 4+ · 15 min</div>
+      </div>
+      <div class="story-btn" onclick="selectStory(this,'The Panchatantra — The Lion Who Learned to Listen')">
+        <div class="s-faith">🕉️ Hindu</div>
+        <div class="s-title">The Lion Who Learned to Listen</div>
+        <div class="s-age">Ages 4–10 · 8 min</div>
+      </div>
+      <div class="story-btn" onclick="selectStory(this,'Guru Nanak — Mool Mantar')">
+        <div class="s-faith">🙏 Sikh</div>
+        <div class="s-title">Mool Mantar — Guru Nanak</div>
+        <div class="s-age">All ages · 6 min</div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      The story will be presented in the age-appropriate version for your child. All sessions are recorded and saved to your family library.
+    </div>
+
+    <div class="btn-row">
+      <span></span>
+      <button class="btn btn-primary" onclick="goStep(2)">
+        Next — Choose Narrator
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2 — Narrator & Voice -->
+  <div class="step-panel" id="step-2">
+    <div class="step-title">Who will read the story?</div>
+    <div class="step-sub">Choose the narrator's voice — a family member, a chosen elder, or the sacred divine voice of your tradition.</div>
+
+    <div class="form-group"><label>Narrator Type *</label></div>
+    <div class="voice-grid">
+      <div class="voice-btn selected" onclick="selectVoice(this,'father')">
+        <div class="v-icon">👨</div>
+        <div class="v-name">Father</div>
+        <div class="v-type">Live or recorded</div>
+      </div>
+      <div class="voice-btn" onclick="selectVoice(this,'grandfather')">
+        <div class="v-icon">👴</div>
+        <div class="v-name">Grandfather</div>
+        <div class="v-type">Chosen elder</div>
+      </div>
+      <div class="voice-btn" onclick="selectVoice(this,'mother')">
+        <div class="v-icon">👩</div>
+        <div class="v-name">Mother</div>
+        <div class="v-type">Live or recorded</div>
+      </div>
+      <div class="voice-btn" onclick="selectVoice(this,'elder')">
+        <div class="v-icon">🤲</div>
+        <div class="v-name">Chosen Elder</div>
+        <div class="v-type">Any trusted adult</div>
+      </div>
+      <div class="voice-btn" onclick="selectVoice(this,'deity')">
+        <div class="v-icon">✨</div>
+        <div class="v-name">Divine Voice</div>
+        <div class="v-type">Sacred narrator</div>
+      </div>
+      <div class="voice-btn" onclick="selectVoice(this,'community')">
+        <div class="v-icon">🌍</div>
+        <div class="v-name">Community Voice</div>
+        <div class="v-type">Vetted storyteller</div>
+      </div>
+    </div>
+
+    <div id="narratorDetails">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Narrator's Name *</label>
+          <input type="text" id="narratorName" placeholder="First and last name"/>
+        </div>
+        <div class="form-group">
+          <label>Narrator's Email or Phone *</label>
+          <input type="text" id="narratorContact" placeholder="Email or phone number"/>
+        </div>
+      </div>
+      <div class="note-box">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        The narrator will receive a session invitation by email with the video link, story text, and recording instructions. No account or app download required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Photo of Narrator (optional but recommended)</label>
+      <input type="file" id="narratorPhoto" accept="image/*" style="background:var(--cream)"/>
+      <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem">The child will see this photo while the story plays. Stored privately for your family only.</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="goStep(1)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(3)">
+        Next — Choose Platform
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3 — Platform & Scheduling -->
+  <div class="step-panel" id="step-3">
+    <div class="step-title">How and when?</div>
+    <div class="step-sub">Choose the video platform and schedule the session — or record right now.</div>
+
+    <div class="form-group"><label>Session Platform *</label></div>
+    <div class="platform-grid">
+      <div class="platform-btn selected" onclick="selectPlatform(this,'Microsoft Teams')">
+        <span class="p-icon">🟦</span>
+        <div class="p-name">Microsoft Teams</div>
+        <div class="p-desc">Auto-recorded</div>
+      </div>
+      <div class="platform-btn" onclick="selectPlatform(this,'Zoom')">
+        <span class="p-icon">🔵</span>
+        <div class="p-name">Zoom</div>
+        <div class="p-desc">Recording available</div>
+      </div>
+      <div class="platform-btn" onclick="selectPlatform(this,'Google Meet')">
+        <span class="p-icon">🟢</span>
+        <div class="p-name">Google Meet</div>
+        <div class="p-desc">Auto Google Calendar</div>
+      </div>
+      <div class="platform-btn" onclick="selectPlatform(this,'Phone Call')">
+        <span class="p-icon">📞</span>
+        <div class="p-name">Phone Call</div>
+        <div class="p-desc">No internet needed</div>
+      </div>
+      <div class="platform-btn" onclick="selectPlatform(this,'Browser Recorder')">
+        <span class="p-icon">🌐</span>
+        <div class="p-name">Browser Recorder</div>
+        <div class="p-desc">No app required</div>
+      </div>
+      <div class="platform-btn" onclick="selectPlatform(this,'Upload Video')">
+        <span class="p-icon">📤</span>
+        <div class="p-name">Upload Video</div>
+        <div class="p-desc">Already recorded</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Session Date *</label>
+        <input type="date" id="sessionDate"/>
+      </div>
+      <div class="form-group">
+        <label>Session Time *</label>
+        <input type="time" id="sessionTime"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Time Zone</label>
+      <select id="sessionTZ">
+        <option value="America/New_York">Eastern Time (ET)</option>
+        <option value="America/Chicago">Central Time (CT)</option>
+        <option value="America/Denver">Mountain Time (MT)</option>
+        <option value="America/Los_Angeles">Pacific Time (PT)</option>
+        <option value="America/Sao_Paulo">Brazil (BRT)</option>
+        <option value="Europe/London">London (GMT)</option>
+        <option value="Asia/Kolkata">India (IST)</option>
+        <option value="Asia/Dubai">Gulf (GST)</option>
+        <option value="Africa/Lagos">West Africa (WAT)</option>
+        <option value="Africa/Nairobi">East Africa (EAT)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Make this a recurring story time?</label>
+      <select id="sessionRecurring">
+        <option value="none">One-time session</option>
+        <option value="weekly">Weekly — same day and time</option>
+        <option value="biweekly">Every two weeks</option>
+        <option value="monthly">Monthly</option>
+        <option value="bedtime">Daily bedtime (automated, pre-recorded)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Parent / Guardian Email (for confirmation) *</label>
+      <input type="email" id="parentEmail" placeholder="your@email.com"/>
+    </div>
+
+    <div class="note-box">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+      A Google Calendar event will be created automatically with the video link. Both you and the narrator will receive invitations and reminders.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="goStep(2)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(4)">
+        Review & Confirm
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 4 — Review -->
+  <div class="step-panel" id="step-4">
+    <div class="step-title">Review your session</div>
+    <div class="step-sub">Everything looks right? Click Schedule to create the session.</div>
+
+    <div class="confirm-details" id="reviewDetails">
+      <!-- Filled by JS -->
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="goStep(3)">← Back</button>
+      <button class="btn btn-gold" onclick="scheduleSession()">
+        ✨ Schedule the Session
+      </button>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION -->
+  <div class="confirm-screen" id="confirmScreen">
+    <div class="confirm-icon">✅</div>
+    <div class="confirm-title">Session Scheduled!</div>
+    <div class="confirm-sub">Your story session has been booked. The narrator will receive their invitation within minutes.</div>
+    <div class="confirm-details" id="confirmDetails"></div>
+    <div class="next-steps">
+      <h3>📋 What Happens Next</h3>
+      <div class="next-step"><div class="step-dot">1</div><div>A Google Calendar event is created with the video link — check your email</div></div>
+      <div class="next-step"><div class="step-dot">2</div><div>The narrator receives their invitation with the story text and joining instructions</div></div>
+      <div class="next-step"><div class="step-dot">3</div><div>At session time, both join via the platform chosen</div></div>
+      <div class="next-step"><div class="step-dot">4</div><div>Session is recorded and saved to your child's library within 24 hours</div></div>
+      <div class="next-step"><div class="step-dot">5</div><div>Child can replay the session — face and voice — any time they want</div></div>
+    </div>
+    <button class="btn btn-primary" onclick="window.location.href='/'">Return to Library</button>
+  </div>
+
+</div>
+
+<script>
+let session = {
+  story: 'Bhagavad Gita — Chapter 2',
+  voiceType: 'father',
+  platform: 'Microsoft Teams'
+};
+
+function goStep(n) {
+  [1,2,3,4].forEach(i => {
+    document.getElementById('step-'+i).classList.remove('active');
+    const ind = document.getElementById('ind-'+i);
+    ind.classList.remove('active','done');
+    if (i < n) ind.classList.add('done');
+  });
+  document.getElementById('step-'+n).classList.add('active');
+  document.getElementById('ind-'+n).classList.add('active');
+  if (n === 4) buildReview();
+  window.scrollTo({top:120,behavior:'smooth'});
+}
+
+function selectStory(el, story) {
+  document.querySelectorAll('.story-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  session.story = story;
+}
+
+function selectVoice(el, type) {
+  document.querySelectorAll('.voice-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  session.voiceType = type;
+  document.getElementById('narratorDetails').style.display = type === 'deity' || type === 'community' ? 'none' : 'block';
+}
+
+function selectPlatform(el, platform) {
+  document.querySelectorAll('.platform-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  session.platform = platform;
+}
+
+function buildReview() {
+  const rows = [
+    ['Child', document.getElementById('childName').value || '—'],
+    ['Age Group', document.getElementById('childAge').value || '—'],
+    ['Tradition', document.getElementById('faithTrad').value || 'Any'],
+    ['Story', session.story],
+    ['Narrator Type', session.voiceType],
+    ['Narrator', document.getElementById('narratorName').value || '—'],
+    ['Platform', session.platform],
+    ['Date', document.getElementById('sessionDate').value || '—'],
+    ['Time', document.getElementById('sessionTime').value || '—'],
+    ['Recurring', document.getElementById('sessionRecurring').value || 'One-time'],
+    ['Your Email', document.getElementById('parentEmail').value || '—'],
+  ];
+  document.getElementById('reviewDetails').innerHTML = rows.map(([l,v]) => `
+    <div class="detail-row"><span class="detail-label">${l}</span><span class="detail-val">${v}</span></div>`).join('');
+}
+
+async function scheduleSession() {
+  // Show confirmation
+  document.getElementById('step-4').style.display = 'none';
+  document.getElementById('confirmScreen').style.display = 'block';
+
+  const details = [
+    ['Child', document.getElementById('childName').value],
+    ['Story', session.story],
+    ['Narrator', document.getElementById('narratorName').value || session.voiceType],
+    ['Platform', session.platform],
+    ['Date & Time', document.getElementById('sessionDate').value + ' at ' + document.getElementById('sessionTime').value],
+  ];
+  document.getElementById('confirmDetails').innerHTML = details.map(([l,v]) => `
+    <div class="detail-row"><span class="detail-label">${l}</span><span class="detail-val">${v}</span></div>`).join('');
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Set min date to today
+document.getElementById('sessionDate').min = new Date().toISOString().slice(0,10);
+</script>
+</body>
+</html>
