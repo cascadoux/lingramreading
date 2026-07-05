@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Lingram Reading Room</title>
+<style>
+:root{--navy:#1a2e1a;--blue:#2d4a2d;--accent:#8fbc5a;--light:#f4f8f0;--white:#fff;--text:#1e2a1e;--muted:#5a6b5a;--border:#d4e4c4}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--text);background:var(--white)}
+nav{background:var(--navy);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
+.nav-logo{color:var(--white);font-size:1.1rem;font-weight:800;text-decoration:none}
+.nav-logo span{color:var(--accent)}
+.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;padding:0 .9rem;font-size:.9rem}
+.nav-links a:hover{color:var(--white)}
+.hero{background:linear-gradient(135deg,var(--navy),var(--blue));color:var(--white);padding:100px 2rem 80px;text-align:center}
+.hero .badge{display:inline-block;background:rgba(143,188,90,.18);border:1px solid rgba(143,188,90,.4);color:var(--accent);padding:6px 16px;border-radius:20px;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.5rem}
+.hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:900;margin-bottom:1rem}
+.hero h1 em{color:var(--accent);font-style:normal}
+.hero p{color:rgba(255,255,255,.8);font-size:1.05rem;line-height:1.75;max-width:580px;margin:0 auto 2.5rem}
+.btn{display:inline-block;padding:13px 28px;border-radius:8px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;border:none;font-size:.95rem}
+.btn-green{background:var(--accent);color:var(--navy)}
+.btn-green:hover{background:#a0cc6a;transform:translateY(-2px)}
+.section{padding:70px 2rem}.section-alt{background:var(--light)}
+.container{max-width:1060px;margin:0 auto}
+.section-tag{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:.7rem}
+.section-title{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;color:var(--navy);margin-bottom:1rem}
+.section-sub{color:var(--muted);font-size:1rem;line-height:1.7;max-width:550px;margin-bottom:2.5rem}
+.books-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem}
+.book-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:box-shadow .2s,transform .2s;cursor:pointer}
+.book-card:hover{box-shadow:0 6px 24px rgba(26,46,26,.1);transform:translateY(-3px)}
+.book-spine{height:6px;background:linear-gradient(90deg,var(--accent),#c8e87a);border-radius:3px;margin-bottom:1.2rem}
+.book-card h4{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:.3rem}
+.book-card .author{font-size:.8rem;color:var(--muted);margin-bottom:.8rem}
+.book-card .genre{font-size:.75rem;background:rgba(143,188,90,.15);color:var(--blue);padding:3px 10px;border-radius:10px;display:inline-block}
+.feature-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+.feature{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.8rem}
+.feature svg{width:36px;height:36px;color:var(--blue);margin-bottom:1rem}
+.feature h3{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.5rem}
+.feature p{font-size:.9rem;color:var(--muted);line-height:1.6}
+footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:2.5rem;font-size:.85rem}
+footer a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="nav-logo">Lingram <span>Reading Room</span></a>
+  <div class="nav-links">
+    <a href="#collection">Collection</a>
+    <a href="#features">Features</a>
+    <a href="#join">Join</a>
+  </div>
+</nav>
+<div class="hero">
+  <div class="badge">A Curated Literary Space</div>
+  <h1>Books That <em>Illuminate</em></h1>
+  <p>A thoughtfully curated reading space celebrating literature of the diaspora, historical fiction, spiritual texts, and stories of resilience from voices often left unheard.</p>
+  <a href="#join" class="btn btn-green">Join the Reading Room</a>
+</div>
+
+<div class="section" id="collection">
+  <div class="container">
+    <div class="section-tag">Featured Collection</div>
+    <div class="section-title">Curated for the Curious Mind</div>
+    <div class="section-sub">Each title is hand-selected for its power to expand perspective, deepen empathy, and illuminate history.</div>
+    <div class="books-grid">
+      <div class="book-card"><div class="book-spine"></div><h4>Shakuntala of Barrackpore</h4><div class="author">Lingam</div><span class="genre">Historical Fiction</span></div>
+      <div class="book-card"><div class="book-spine"></div><h4>Coolie Woman</h4><div class="author">Gaiutra Bahadur</div><span class="genre">History / Memoir</span></div>
+      <div class="book-card"><div class="book-spine"></div><h4>The Brief Wondrous Life of Oscar Wao</h4><div class="author">Junot Díaz</div><span class="genre">Literary Fiction</span></div>
+      <div class="book-card"><div class="book-spine"></div><h4>Homegoing</h4><div class="author">Yaa Gyasi</div><span class="genre">Historical Fiction</span></div>
+      <div class="book-card"><div class="book-spine"></div><h4>The Ramayana</h4><div class="author">Valmiki</div><span class="genre">Sacred Text</span></div>
+      <div class="book-card"><div class="book-spine"></div><h4>A Thousand Splendid Suns</h4><div class="author">Khaled Hosseini</div><span class="genre">Literary Fiction</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="section section-alt" id="features">
+  <div class="container">
+    <div class="section-tag">What We Offer</div>
+    <div class="section-title">More Than a Bookshelf</div>
+    <div class="feature-list">
+      <div class="feature">
+        <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="28" height="28" rx="3"/><path d="M10 12h16M10 18h16M10 24h10" stroke-linecap="round"/></svg>
+        <h3>Monthly Reading Guides</h3>
+        <p>Deep-dive discussion guides, historical context, and author notes for every featured title.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="14" r="7"/><path d="M6 32c0-7 24-7 24 0"/></svg>
+        <h3>Community Book Circles</h3>
+        <p>Virtual and in-person reading circles where voices and stories are heard and honored.</p>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 4l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z"/></svg>
+        <h3>Author Spotlights</h3>
+        <p>Interviews, essays, and conversations with writers from the diaspora and beyond.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="join">
+  <div class="container" style="max-width:580px;text-align:center">
+    <div class="section-tag">Join Us</div>
+    <div class="section-title">Enter the Reading Room</div>
+    <div class="section-sub" style="margin:0 auto 2rem">Free membership. New titles monthly. A community of readers who believe stories change everything.</div>
+    <form onsubmit="this.innerHTML='<p style=color:#2d4a2d;font-weight:700;padding:1rem>Welcome to the Reading Room! Check your inbox.</p>';return false;" style="display:flex;flex-direction:column;gap:1rem;text-align:left">
+      <input type="text" placeholder="Your Name" style="padding:13px 16px;border:1.5px solid var(--border);border-radius:8px;font-size:.95rem;background:var(--light);font-family:inherit"/>
+      <input type="email" placeholder="Email Address" style="padding:13px 16px;border:1.5px solid var(--border);border-radius:8px;font-size:.95rem;background:var(--light);font-family:inherit"/>
+      <button class="btn btn-green" style="width:100%;padding:14px">Join the Reading Room →</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Lingram Reading Room &nbsp;|&nbsp; Part of the Lingram Family Trust &nbsp;|&nbsp; <a href="mailto:hello@lingramreadingroom.com">hello@lingramreadingroom.com</a></p>
+</footer>
+</body>
+</html>
