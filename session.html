@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Schedule a Story Session — Lingram Reading Room</title>
 <style>
@@ -431,17 +432,13 @@ nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justif
 
   <!-- CONFIRMATION -->
   <div class="confirm-screen" id="confirmScreen">
-    <div class="confirm-icon">✅</div>
-    <div class="confirm-title">Session Scheduled!</div>
-    <div class="confirm-sub">Your story session has been booked. The narrator will receive their invitation within minutes.</div>
-    <div class="confirm-details" id="confirmDetails"></div>
+    <div class="confirm-icon">✉️</div>
+    <div class="confirm-title">Story Sessions aren&rsquo;t live yet</div>
+    <div class="confirm-sub">Nothing has been booked. Nothing you typed left your browser &mdash; it was not sent to us, and it was not stored anywhere. We are still building this.</div>
     <div class="next-steps">
-      <h3>📋 What Happens Next</h3>
-      <div class="next-step"><div class="step-dot">1</div><div>A Google Calendar event is created with the video link — check your email</div></div>
-      <div class="next-step"><div class="step-dot">2</div><div>The narrator receives their invitation with the story text and joining instructions</div></div>
-      <div class="next-step"><div class="step-dot">3</div><div>At session time, both join via the platform chosen</div></div>
-      <div class="next-step"><div class="step-dot">4</div><div>Session is recorded and saved to your child's library within 24 hours</div></div>
-      <div class="next-step"><div class="step-dot">5</div><div>Child can replay the session — face and voice — any time they want</div></div>
+      <h3>How to reach us in the meantime</h3>
+      <div class="next-step"><div class="step-dot">1</div><div>Email <a href="mailto:hello@lingramreadingroom.com" style="color:var(--gold)">hello@lingramreadingroom.com</a> and we will tell you the moment Story Sessions open.</div></div>
+      <div class="next-step"><div class="step-dot">2</div><div>Please don&rsquo;t send a child&rsquo;s photo or details by email either. We will only ask for what we need once the service is actually running.</div></div>
     </div>
     <button class="btn btn-primary" onclick="window.location.href='/'">Return to Library</button>
   </div>
@@ -505,21 +502,11 @@ function buildReview() {
     <div class="detail-row"><span class="detail-label">${l}</span><span class="detail-val">${v}</span></div>`).join('');
 }
 
-async function scheduleSession() {
-  // Show confirmation
+function scheduleSession() {
+  // Story Sessions are not live. Nothing is transmitted or stored - do not
+  // reinstate a confirmation that claims a booking was made.
   document.getElementById('step-4').style.display = 'none';
   document.getElementById('confirmScreen').style.display = 'block';
-
-  const details = [
-    ['Child', document.getElementById('childName').value],
-    ['Story', session.story],
-    ['Narrator', document.getElementById('narratorName').value || session.voiceType],
-    ['Platform', session.platform],
-    ['Date & Time', document.getElementById('sessionDate').value + ' at ' + document.getElementById('sessionTime').value],
-  ];
-  document.getElementById('confirmDetails').innerHTML = details.map(([l,v]) => `
-    <div class="detail-row"><span class="detail-label">${l}</span><span class="detail-val">${v}</span></div>`).join('');
-
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
